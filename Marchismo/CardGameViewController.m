@@ -16,6 +16,9 @@
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *flipResults;
+- (IBAction)dealButton:(UIButton *)sender;
+- (IBAction)gameMatchSetting:(UISegmentedControl *)sender;
 @end
 
 @implementation CardGameViewController
@@ -45,10 +48,12 @@
         cardButton.alpha = card.isUnplayable ? 0.5 : 1.0;
     }
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+    self.flipResults.text = self.game.flipResult ? [NSString stringWithFormat:@"%@", self.game.flipResult] : @"";
 }
 
 - (IBAction)flipCard:(UIButton *)sender
 {
+    
     [self.game flipCardAtIndex:[self.cardButtons indexOfObject:sender]];
     self.flipCount++;
     [self updateUI];
@@ -58,6 +63,22 @@
 {
     _flipCount = flipCount;
     self.flipsLabel.text = [NSString stringWithFormat:@"Flips: %d", self.flipCount];
+}
+
+
+- (IBAction)dealButton:(UIButton *)sender
+{
+    _game = nil;
+    self.flipCount = 0;
+    [self game];
+    [self updateUI];
+}
+
+- (IBAction)gameMatchSetting:(UISegmentedControl *)sender
+{
+    
+    
+    
 }
 
 
